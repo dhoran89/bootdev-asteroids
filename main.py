@@ -12,23 +12,36 @@ def main():
     x = SCREEN_WIDTH/2
     y = SCREEN_HEIGHT/2
     r = PLAYER_RADIUS
+    
+    #containers
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    #create groups
+    Player.containers = (updatable,drawable)
+    #instantiate player obj
     player = Player(x, y, r)
+
+    
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
 
-
+        #fill screen black
         screen.fill("black")
-        player.update(dt)
-        player.draw(screen)
+        #update container(updatable)
+        updatable.update(dt)
+
+        #draw what is in container(drawable)
+        for obj in drawable:
+            obj.draw(screen)
+        
+        #flip display
         pygame.display.flip()
         
         #limit framerate to 60 FPS
         dt = clock.tick(60) / 1000
-
-        #instantiate player obj
 
 if __name__ == "__main__":
     main()
